@@ -10,7 +10,7 @@ CALCULATOR   = "gnome-calculator"
 MONITOR1 = "HDMI-A-1" -- Philips
 MONITOR2 = "DP-1"     -- LG
 MONITOR3 = ""
-PRIMARY_MONITOR = MONITOR1
+PRIMARY_MONITOR = MONITOR2
 
 -- Workspaces
 NUM_WPM = 2 -- Number of workspaces per monitor (Max 10)
