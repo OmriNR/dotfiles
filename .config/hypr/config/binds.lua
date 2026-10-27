@@ -1,5 +1,5 @@
 local mainMod = "SUPER"
-local noctCall = "noctalia msg "
+local serp = "serpantinum "
 local launchPrefix = "uwsm app -- " -- if you are not using UWSM, make this empty (e.g. "")
 
 -- AZERTY fix: the number-row keys emit symbols (& é " ' ...) without Shift, so
@@ -27,7 +27,7 @@ hl.bind(mainMod .. " + Right", hl.dsp.focus({ direction = "right" }))
 hl.bind(mainMod .. " + Up",    hl.dsp.focus({ direction = "up" }))
 hl.bind(mainMod .. " + Down",  hl.dsp.focus({ direction = "down" }))
 hl.bind("ALT + Tab",           hl.dsp.window.cycle_next())
-hl.bind(mainMod .. " + Tab",   hl.dsp.exec_cmd(noctCall .. "window-switcher"))
+-- hl.bind(mainMod .. " + Tab", ...) -- serpantinum has no window switcher
 
 -- Move active window around workspaces & monitors
 hl.bind(mainMod .. " + SHIFT + Up",                   hl.dsp.window.move({ direction = "u" }))
@@ -84,34 +84,34 @@ hl.bind(mainMod .. " + E",          hl.dsp.exec_cmd(launchPrefix .. FILE_MANAGER
 hl.bind(mainMod .. " + T",          hl.dsp.exec_cmd(launchPrefix .. EDITOR))
 hl.bind(mainMod .. " + C",          hl.dsp.exec_cmd(launchPrefix .. CALCULATOR))
 hl.bind("XF86Calculator",           hl.dsp.exec_cmd(launchPrefix .. CALCULATOR))
-hl.bind(mainMod .. " + W",          hl.dsp.exec_cmd(launchPrefix .. BROWSER))
+hl.bind(mainMod .. " + code:25",    hl.dsp.exec_cmd(launchPrefix .. BROWSER)) -- W by keycode, works in both us/il layouts
 hl.bind("CONTROL + SHIFT + Escape", hl.dsp.exec_cmd(launchPrefix .. TERMINAL .. " -e btop"))
-hl.bind(mainMod .. " + Z",          hl.dsp.exec_cmd(noctCall .. "settings-toggle"))
-hl.bind(mainMod .. " + X",          hl.dsp.exec_cmd(noctCall .. "panel-toggle control-center"))
-hl.bind(mainMod .. " + Space",      hl.dsp.exec_cmd(noctCall .. "panel-toggle launcher"))
-hl.bind(mainMod .. " + period",     hl.dsp.exec_cmd(noctCall .. "panel-toggle launcher /emo"))
-hl.bind(mainMod .. " + L",          hl.dsp.exec_cmd(noctCall .. "session lock"))
-hl.bind(mainMod .. " + ALT + C",    hl.dsp.exec_cmd(noctCall .. "panel-toggle session"))
+hl.bind(mainMod .. " + Z",          hl.dsp.exec_cmd(serp .. "msg toggle settings"))
+hl.bind(mainMod .. " + X",          hl.dsp.exec_cmd(serp .. "msg toggle system"))
+hl.bind(mainMod .. " + Space",      hl.dsp.exec_cmd(serp .. "msg toggle launcher"))
+-- hl.bind(mainMod .. " + period", ...) -- emojis are a tab inside the launcher (Super+Space)
+hl.bind(mainMod .. " + L",          hl.dsp.exec_cmd(serp .. "lock"))
+hl.bind(mainMod .. " + ALT + C",    hl.dsp.exec_cmd(serp .. "msg toggle system"))
 
 ---------------------------
 ---- HARDWARE CONTROLS ----
 ---------------------------
 
 -- Audio
-hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd(noctCall .. "volume-up"),   { locked = true, repeating = true })
-hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd(noctCall .. "volume-down"), { locked = true, repeating = true })
-hl.bind("XF86AudioMute",        hl.dsp.exec_cmd(noctCall .. "volume-mute"), { locked = true })
-hl.bind("XF86AudioMicMute",     hl.dsp.exec_cmd(noctCall .. "mic-mute"),    { locked = true })
+hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd(serp .. "volume raise"),   { locked = true, repeating = true })
+hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd(serp .. "volume lower"), { locked = true, repeating = true })
+hl.bind("XF86AudioMute",        hl.dsp.exec_cmd(serp .. "volume mute-toggle"), { locked = true })
+hl.bind("XF86AudioMicMute",     hl.dsp.exec_cmd(serp .. "volume mic-toggle"),    { locked = true })
 
 -- Media
-hl.bind("XF86AudioPlay",  hl.dsp.exec_cmd(noctCall .. "media toggle"),   { locked = true })
-hl.bind("XF86AudioPause", hl.dsp.exec_cmd(noctCall .. "media toggle"),   { locked = true })
-hl.bind("XF86AudioNext",  hl.dsp.exec_cmd(noctCall .. "media next"),     { locked = true })
-hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd(noctCall .. "media previous"), { locked = true })
+hl.bind("XF86AudioPlay",  hl.dsp.exec_cmd("playerctl play-pause"),   { locked = true })
+hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"),   { locked = true })
+hl.bind("XF86AudioNext",  hl.dsp.exec_cmd("playerctl next"),     { locked = true })
+hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("playerctl previous"), { locked = true })
 
 -- Brightness
-hl.bind("XF86MonBrightnessUp",   hl.dsp.exec_cmd(noctCall .. "brightness-up"),   { locked = true, repeating = true })
-hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd(noctCall .. "brightness-down"), { locked = true, repeating = true })
+hl.bind("XF86MonBrightnessUp",   hl.dsp.exec_cmd(serp .. "brightness raise"),   { locked = true, repeating = true })
+hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd(serp .. "brightness lower"), { locked = true, repeating = true })
 
 -------------------
 ---- UTILITIES ----
@@ -119,21 +119,21 @@ hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd(noctCall .. "brightness-down"),
 
 -- Screen Capture
 hl.bind(mainMod .. " + P",     hl.dsp.exec_cmd("hyprpicker -a -n"))
-hl.bind("Print",               hl.dsp.exec_cmd(noctCall .. "screenshot-region"))
-hl.bind(mainMod .. " + Print", hl.dsp.exec_cmd(noctCall .. "screenshot-fullscreen"))
+hl.bind("Print",               hl.dsp.exec_cmd(serp .. "screenshot"))
+hl.bind(mainMod .. " + Print", hl.dsp.exec_cmd(serp .. "screenshot --full"))
 
 -- Theming and Wallpaper
-hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd(noctCall .. "panel-toggle wallpaper"))
--- Cycle wallpapers from ~/aesthetic-wallpapers/images (set as Noctalia's wallpaper directory)
-hl.bind(mainMod .. " + ALT + Right", hl.dsp.exec_cmd(noctCall .. "wallpaper-next"))
-hl.bind(mainMod .. " + ALT + Left",  hl.dsp.exec_cmd(noctCall .. "wallpaper-previous"))
-hl.bind(mainMod .. " + ALT + R",     hl.dsp.exec_cmd(noctCall .. "wallpaper-random"))
+hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd(serp .. "msg toggle wallpaper"))
+-- Cycle wallpapers from ~/aesthetic-wallpapers/images (set as serpantinum's wallpaper directory)
+hl.bind(mainMod .. " + ALT + Right", hl.dsp.exec_cmd(serp .. "set wallpaper next"))
+hl.bind(mainMod .. " + ALT + Left",  hl.dsp.exec_cmd(serp .. "set wallpaper prev"))
+hl.bind(mainMod .. " + ALT + R",     hl.dsp.exec_cmd(serp .. "set wallpaper random"))
 
 -- Clipboard
-hl.bind(mainMod .. " + V", hl.dsp.exec_cmd(noctCall .. "panel-toggle clipboard"))
+hl.bind(mainMod .. " + V", hl.dsp.exec_cmd(serp .. "msg toggle clipboard"))
 
 -- Notifications
-hl.bind(mainMod .. " + A", hl.dsp.exec_cmd(noctCall .. "panel-toggle control-center notifications"))
+hl.bind(mainMod .. " + A", hl.dsp.exec_cmd(serp .. "msg toggle notifications"))
 
 -------------------------------
 ---- WORKSPACES & MONITORS ----
